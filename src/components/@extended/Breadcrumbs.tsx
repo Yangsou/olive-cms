@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
@@ -10,8 +9,11 @@ import { Grid, Typography } from '@mui/material';
 import MainCard from '../MainCard';
 
 // ==============================|| BREADCRUMBS ||============================== //
-
-const Breadcrumbs = ({ navigation, title, ...others }) => {
+type Props = {
+    navigation: any,
+    title: boolean
+}
+const Breadcrumbs = ({ navigation, title, ...others }: Props) => {
     const location = useLocation();
     const [main, setMain] = useState();
     const [item, setItem] = useState();
@@ -98,9 +100,5 @@ const Breadcrumbs = ({ navigation, title, ...others }) => {
     return breadcrumbContent;
 };
 
-Breadcrumbs.propTypes = {
-    navigation: PropTypes.object,
-    title: PropTypes.bool
-};
 
 export default Breadcrumbs;

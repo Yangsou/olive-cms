@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 
 // ==============================|| NAVIGATION - SCROLL TO TOP ||============================== //
 type Props = {
-  children: ReactNode;
+    children: ReactNode;
 }
 const ScrollTop = ({ children }: Props) => {
     const location = useLocation();
@@ -16,8 +16,11 @@ const ScrollTop = ({ children }: Props) => {
             behavior: 'smooth'
         });
     }, [pathname]);
-
-    return children || null;
+    return (
+        <>
+            {children}
+        </>
+    )
 };
 
 export default ScrollTop;

@@ -1,10 +1,12 @@
-import PropTypes from 'prop-types';
-
 // material-ui
 import { useTheme } from '@mui/material/styles';
 import { Box } from '@mui/material';
 
-const Dot = ({ color, size }) => {
+type Props = {
+    color: string,
+    size: number
+}
+const Dot = ({ color, size }: Props) => {
     const theme = useTheme();
     let main;
     switch (color) {
@@ -39,10 +41,4 @@ const Dot = ({ color, size }) => {
         />
     );
 };
-
-Dot.propTypes = {
-    color: PropTypes.string,
-    size: PropTypes.number
-};
-
 export default Dot;
