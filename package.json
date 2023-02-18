@@ -21,7 +21,8 @@
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.8.1",
     "simplebar-react": "^3.2.1",
-    "yup": "^0.32.11"
+    "yup": "^0.32.11",
+    "zustand": "^4.3.3"
   },
   "devDependencies": {
     "@types/node": "^18.13.0",

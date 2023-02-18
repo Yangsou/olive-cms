@@ -7,43 +7,51 @@ import { Box, Grid } from '@mui/material';
 import AuthCard from './AuthCard';
 import Logo from '@/components/Logo';
 // assets
-import AuthBackground from '@/assets/images/auth/AuthBackground';
+// import AuthBackground from '@/assets/images/auth/AuthBackground';
 import { ReactNode } from 'react';
+import useGlobalStore from '@/global-store/GlobalStore';
+import { Navigate } from 'react-router-dom';
 
 // ==============================|| AUTHENTICATION - WRAPPER ||============================== //
 type Props = {
     children: ReactNode
 }
-const AuthWrapper = ({ children }: Props) => (
-    <Box sx={{ minHeight: '100vh' }}>
-        <AuthBackground />
-        <Grid
-            container
-            direction="column"
-            justifyContent="flex-end"
-            sx={{
-                minHeight: '100vh'
-            }}
-        >
-            <Grid item xs={12} sx={{ ml: 3, mt: 3 }}>
-                <Logo />
-            </Grid>
-            <Grid item xs={12}>
-                <Grid
-                    item
-                    xs={12}
-                    container
-                    justifyContent="center"
-                    alignItems="center"
-                    sx={{ minHeight: { xs: 'calc(100vh - 134px)', md: 'calc(100vh - 112px)' } }}
-                >
-                    <Grid item>
-                        <AuthCard>{children}</AuthCard>
+const AuthWrapper = ({ children }: Props) => {
+    const globalStore = useGlobalStore();
+    if (globalStore.isAuthenticated) {
+        return <Navigate to={'/dashboard'} />
+    }
+    return (
+        <Box sx={{ minHeight: '100vh' }}>
+            {/* <AuthBackground /> */}
+            <Grid
+                container
+                direction="column"
+                justifyContent="flex-end"
+                sx={{
+                    minHeight: '100vh'
+                }}
+            >
+                <Grid item xs={12} sx={{ ml: 3, mt: 3 }}>
+                    <Logo />
+                </Grid>
+                <Grid item xs={12}>
+                    <Grid
+                        item
+                        xs={12}
+                        container
+                        justifyContent="center"
+                        alignItems="center"
+                        sx={{ minHeight: { xs: 'calc(100vh - 134px)', md: 'calc(100vh - 112px)' } }}
+                    >
+                        <Grid item>
+                            <AuthCard>{children}</AuthCard>
+                        </Grid>
                     </Grid>
                 </Grid>
             </Grid>
-        </Grid>
-    </Box>
-);
+        </Box>
+    )
+};
 
 export default AuthWrapper;

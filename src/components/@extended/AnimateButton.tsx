@@ -5,7 +5,7 @@ import { ReactNode } from 'react';
 // ==============================|| ANIMATION BUTTON ||============================== //
 type Props = {
     children: ReactNode;
-    type: 'slide' | 'scale' | 'rotate'
+    type?: 'slide' | 'scale' | 'rotate'
 }
 export default function AnimateButton({ children, type }: Props) {
     switch (type) {

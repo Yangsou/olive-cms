@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Outlet } from 'react-router-dom';
+import { Navigate, Outlet } from 'react-router-dom';
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
@@ -10,18 +10,25 @@ import Drawer from './Drawer';
 import Header from './Header';
 import navigation from '@/menu-items';
 import Breadcrumbs from '@/components/@extended/Breadcrumbs';
+import useGlobalStore from '@/global-store/GlobalStore';
 
 // types
 
 // ==============================|| MAIN LAYOUT ||============================== //
 
 const MainLayout = () => {
+    const globalStore = useGlobalStore();
+
+    if (!globalStore.isAuthenticated) {
+      return <Navigate to="/login" replace />;
+    }
+
     const theme = useTheme();
     const matchDownLG = useMediaQuery(theme.breakpoints.down('xl'));
     // const { drawerOpen } = useSelector((state) => state.menu);
 
     // drawer toggler
-    const [open, setOpen] = useState(true);
+    const [open, setOpen] = useState(false);
     const handleDrawerToggle = () => {
         setOpen(!open);
         // dispatch(openDrawer({ drawerOpen: !open }));
