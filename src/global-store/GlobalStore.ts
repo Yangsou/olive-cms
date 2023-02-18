@@ -1,10 +1,14 @@
-import {create} from 'zustand';
+import { create } from 'zustand';
 
 type GlobalStoreType = {
-  isAuthenticated: boolean
+  isAuthenticated: boolean;
+  setAuthenticated: () => void
 }
-const useGlobalStore = create<GlobalStoreType>((get) => ({
-  isAuthenticated: true
+const useGlobalStore = create<GlobalStoreType>((set) => ({
+  isAuthenticated: false,
+  setAuthenticated: () => set({
+    isAuthenticated: true
+  })
 }))
 
 export default useGlobalStore;

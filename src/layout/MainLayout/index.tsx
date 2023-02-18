@@ -28,7 +28,7 @@ const MainLayout = () => {
     // const { drawerOpen } = useSelector((state) => state.menu);
 
     // drawer toggler
-    const [open, setOpen] = useState(false);
+    const [open, setOpen] = useState(true);
     const handleDrawerToggle = () => {
         setOpen(!open);
         // dispatch(openDrawer({ drawerOpen: !open }));
@@ -53,7 +53,7 @@ const MainLayout = () => {
             <Drawer open={open} handleDrawerToggle={handleDrawerToggle} />
             <Box component="main" sx={{ width: '100%', flexGrow: 1, p: { xs: 2, sm: 3 } }}>
                 <Toolbar />
-                <Breadcrumbs navigation={navigation} title titleBottom card={false} divider={false} />
+                <Breadcrumbs navigation={navigation} title />
                 <Outlet />
             </Box>
         </Box>

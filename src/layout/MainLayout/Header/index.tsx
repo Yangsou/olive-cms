@@ -12,8 +12,11 @@ import HeaderContent from './HeaderContent';
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
 
 // ==============================|| MAIN LAYOUT - HEADER ||============================== //
-
-const Header = ({ open, handleDrawerToggle }) => {
+type Props = {
+    open: boolean,
+    handleDrawerToggle: () => void
+}
+const Header = ({ open, handleDrawerToggle }: Props) => {
     const theme = useTheme();
     const matchDownMD = useMediaQuery(theme.breakpoints.down('lg'));
 
@@ -59,11 +62,6 @@ const Header = ({ open, handleDrawerToggle }) => {
             )}
         </>
     );
-};
-
-Header.propTypes = {
-    open: PropTypes.bool,
-    handleDrawerToggle: PropTypes.func
 };
 
 export default Header;

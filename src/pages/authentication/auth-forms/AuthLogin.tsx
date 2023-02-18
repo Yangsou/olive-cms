@@ -20,16 +20,21 @@ import {
 
 // third party
 import * as Yup from 'yup';
-import { Formik } from 'formik';
+import { Formik, FormikHelpers } from 'formik';
 
 // project import
 import AnimateButton from '@/components/@extended/AnimateButton';
 
 // assets
 import { EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons';
-
+import { auth } from '@/services';
+import { signInWithEmailAndPassword } from '@firebase/auth';
 // ============================|| FIREBASE - LOGIN ||============================ //
-
+type FormType = {
+    email: string;
+    password: string;
+    submit?: string;
+}
 const AuthLogin = () => {
     const [checked, setChecked] = React.useState(false);
 
@@ -38,32 +43,36 @@ const AuthLogin = () => {
         setShowPassword(!showPassword);
     };
 
-    const handleMouseDownPassword = (event) => {
+    const handleMouseDownPassword = (event: Event) => {
         event.preventDefault();
     };
 
+    const handleSubmit = async (values: FormType, { setErrors, setStatus, setSubmitting }: FormikHelpers<FormType>) => {
+        try {
+            setSubmitting(true);
+            const result = await signInWithEmailAndPassword(auth, values.email, values.password)
+            console.log(result?.user?.uid);
+            setStatus({ success: false });
+            setSubmitting(false);
+        } catch (err) {
+            setStatus({ success: false });
+            setErrors({ submit: err?.message });
+            setSubmitting(false);
+        }
+    }
     return (
         <>
             <Formik
                 initialValues={{
-                    email: 'info@codedthemes.com',
-                    password: '123456',
-                    submit: null
-                }}
+                    email: 'trungnam@yopmail.com',
+                    password: '1234567890',
+                    submit: ''
+                } as FormType}
                 validationSchema={Yup.object().shape({
                     email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
                     password: Yup.string().max(255).required('Password is required')
                 })}
-                onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
-                    try {
-                        setStatus({ success: false });
-                        setSubmitting(false);
-                    } catch (err) {
-                        setStatus({ success: false });
-                        setErrors({ submit: err.message });
-                        setSubmitting(false);
-                    }
-                }}
+                onSubmit={handleSubmit}
             >
                 {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values }) => (
                     <form noValidate onSubmit={handleSubmit}>
@@ -149,7 +158,7 @@ const AuthLogin = () => {
                                 </Grid>
                             )}
                             <Grid item xs={12}>
-                                <AnimateButton>
+                                <AnimateButton type='scale'>
                                     <Button
                                         disableElevation
                                         disabled={isSubmitting}

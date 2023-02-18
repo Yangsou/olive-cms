@@ -1,0 +1,16 @@
+overwrite: true
+schema:
+  - ${CONTROLLER_URL:"https://special-cowbird-27.hasura.app/v1/graphql"}:
+      headers:
+        x-hasura-admin-secret: ${CONTROLLER_ADMIN_SECRET:XRBtNJ2EEy3gqk4nGAlzC1rU0zjF8qgxfCCspMwuk1d0xY4FWUMmiEDfMw2ZfnTQ}
+generates:
+  src/api/graphql/generated.tsx:
+    documents: "src/**/*.graphql"
+    plugins:
+      - "typescript"
+      - "typescript-operations"
+      - "typescript-react-apollo"
+    config:
+      withHooks: true
+      withComponent: false
+      withHOC: false
