@@ -26,6 +26,10 @@ import SettingTab from './SettingTab';
 
 // assets
 import { LogoutOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons';
+import { signOut } from 'firebase/auth';
+import { auth } from '@/services';
+import { useNavigate } from 'react-router-dom';
+import useGlobalStore from '@/global-store/GlobalStore';
 
 // tab panel wrapper
 type TabPanelType = {
@@ -42,7 +46,7 @@ function TabPanel({ children, value, index, ...other }: TabPanelType) {
 }
 
 TabPanel.propTypes = {
-    
+
 };
 
 function a11yProps(index) {
@@ -56,9 +60,18 @@ function a11yProps(index) {
 
 const Profile = () => {
     const theme = useTheme();
+    const navigate = useNavigate();
+    const globalStore = useGlobalStore();
 
     const handleLogout = async () => {
-        // logout
+        try {
+            await signOut(auth);
+            globalStore.unAuthenticated();
+            navigate('/login')
+
+        } catch (error) {
+
+        }
     };
 
     const anchorRef = useRef(null);
@@ -140,7 +153,7 @@ const Profile = () => {
                                             <Grid container justifyContent="space-between" alignItems="center">
                                                 <Grid item>
                                                     <Stack direction="row" spacing={1.25} alignItems="center">
-                                                        <Avatar alt="profile user" src={avatar1} sx={{ width: 32, height: 32 }} />
+                                                        {/* <Avatar alt="profile user" src={avatar1} sx={{ width: 32, height: 32 }} /> */}
                                                         <Stack>
                                                             <Typography variant="h6">John Doe</Typography>
                                                             <Typography variant="body2" color="textSecondary">

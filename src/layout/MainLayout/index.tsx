@@ -11,6 +11,7 @@ import Header from './Header';
 import navigation from '@/menu-items';
 import Breadcrumbs from '@/components/@extended/Breadcrumbs';
 import useGlobalStore from '@/global-store/GlobalStore';
+import Loader from '@/components/Loader';
 
 // types
 
@@ -18,45 +19,41 @@ import useGlobalStore from '@/global-store/GlobalStore';
 
 const MainLayout = () => {
     const globalStore = useGlobalStore();
-
     if (!globalStore.isAuthenticated) {
-      return <Navigate to="/login" replace />;
+        return <Navigate to="/login" replace />;
     }
 
     const theme = useTheme();
     const matchDownLG = useMediaQuery(theme.breakpoints.down('xl'));
-    // const { drawerOpen } = useSelector((state) => state.menu);
+    const {drawerOpen, toggleDrawerOpen} = useGlobalStore();
 
     // drawer toggler
-    const [open, setOpen] = useState(true);
     const handleDrawerToggle = () => {
-        setOpen(!open);
-        // dispatch(openDrawer({ drawerOpen: !open }));
+        toggleDrawerOpen(!drawerOpen)
     };
 
     // set media wise responsive drawer
     useEffect(() => {
-        setOpen(!matchDownLG);
-        // dispatch(openDrawer({ drawerOpen: !matchDownLG }));
+        toggleDrawerOpen(!matchDownLG);
 
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [matchDownLG]);
 
-    // useEffect(() => {
-    //     if (open !== drawerOpen) setOpen(drawerOpen);
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [drawerOpen]);
-
     return (
-        <Box sx={{ display: 'flex', width: '100%' }}>
-            <Header open={open} handleDrawerToggle={handleDrawerToggle} />
-            <Drawer open={open} handleDrawerToggle={handleDrawerToggle} />
-            <Box component="main" sx={{ width: '100%', flexGrow: 1, p: { xs: 2, sm: 3 } }}>
-                <Toolbar />
-                <Breadcrumbs navigation={navigation} title />
-                <Outlet />
+        <>
+            {
+                globalStore.loading &&
+                <Loader />
+            }
+            <Box sx={{ display: 'flex', width: '100%' }}>
+                <Header open={drawerOpen} handleDrawerToggle={handleDrawerToggle} />
+                <Drawer open={drawerOpen} handleDrawerToggle={handleDrawerToggle} />
+                <Box component="main" sx={{ width: '100%', flexGrow: 1, p: { xs: 2, sm: 3 } }}>
+                    <Toolbar />
+                    <Breadcrumbs navigation={navigation} title />
+                    <Outlet />
+                </Box>
             </Box>
-        </Box>
+        </>
     );
 };
 

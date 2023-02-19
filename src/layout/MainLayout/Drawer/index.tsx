@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import { useMemo } from 'react';
 
 // material-ui
@@ -13,7 +12,12 @@ import { drawerWidth } from '@/config';
 
 // ==============================|| MAIN LAYOUT - DRAWER ||============================== //
 
-const MainDrawer = ({ open, handleDrawerToggle, window }) => {
+type Props = {
+    open: boolean;
+    handleDrawerToggle: () => void;
+    window?: any;
+}
+const MainDrawer = ({ open, handleDrawerToggle, window }: Props) => {
     const theme = useTheme();
     const matchDownMD = useMediaQuery(theme.breakpoints.down('lg'));
 
@@ -24,6 +28,7 @@ const MainDrawer = ({ open, handleDrawerToggle, window }) => {
     const drawerContent = useMemo(() => <DrawerContent />, []);
     const drawerHeader = useMemo(() => <DrawerHeader open={open} />, [open]);
 
+    console.log('matchDownMD', matchDownMD)
     return (
         <Box component="nav" sx={{ flexShrink: { md: 0 }, zIndex: 1300 }} aria-label="mailbox folders">
             {!matchDownMD ? (
@@ -55,12 +60,6 @@ const MainDrawer = ({ open, handleDrawerToggle, window }) => {
             )}
         </Box>
     );
-};
-
-MainDrawer.propTypes = {
-    open: PropTypes.bool,
-    handleDrawerToggle: PropTypes.func,
-    window: PropTypes.object
 };
 
 export default MainDrawer;

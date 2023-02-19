@@ -25,14 +25,12 @@ const ScrollTop = ({ children }: Props) => {
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 globalStore.setAuthenticated()
+            } else {
+                globalStore.setLoading(false)
             }
         })
     }, [])
-    return (
-        <>
-            {children}
-        </>
-    )
+    return <>{children}</>;
 };
 
 export default ScrollTop;

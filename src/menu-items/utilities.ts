@@ -46,14 +46,6 @@ const utilities = {
             url: '/shadow',
             icon: icons.BarcodeOutlined
         },
-        {
-            id: 'ant-icons',
-            title: 'Ant Icons',
-            type: 'item',
-            url: '/icons/ant',
-            icon: icons.AntDesignOutlined,
-            breadcrumbs: false
-        }
     ]
 };
 

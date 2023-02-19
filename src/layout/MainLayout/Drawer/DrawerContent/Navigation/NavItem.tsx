@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import { forwardRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
@@ -7,15 +6,20 @@ import { useTheme } from '@mui/material/styles';
 import { Avatar, Chip, ListItemButton, ListItemIcon, ListItemText, Typography } from '@mui/material';
 
 // project import
-import { activeItem } from '@/store/reducers/menu';
+import useGlobalStore from '@/global-store/GlobalStore';
 
 // ==============================|| NAVIGATION - LIST ITEM ||============================== //
 
-const NavItem = ({ item, level }) => {
+type Props = {
+    item: object,
+    level: number
+}
+const NavItem = ({ item, level }: Props) => {
     const theme = useTheme();
     // const dispatch = useDispatch();
     // const menu = useSelector((state) => state.menu);
-    const { drawerOpen, openItem } = [];
+    const { drawerOpen } = useGlobalStore();
+    const openItem = [];
 
     let itemTarget = '_self';
     if (item.target) {
@@ -135,11 +139,6 @@ const NavItem = ({ item, level }) => {
             )}
         </ListItemButton>
     );
-};
-
-NavItem.propTypes = {
-    item: PropTypes.object,
-    level: PropTypes.number
 };
 
 export default NavItem;
