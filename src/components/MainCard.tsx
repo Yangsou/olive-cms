@@ -1,12 +1,8 @@
-import PropTypes from 'prop-types';
 import { forwardRef, ReactNode } from 'react';
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
 import { Card, CardContent, CardHeader, Divider, Typography } from '@mui/material';
-
-// project import
-import Highlighter from './third-party/Highlighter';
 
 // header style
 const headerSX = {
@@ -16,18 +12,18 @@ const headerSX = {
 
 // ==============================|| CUSTOM - MAIN CARD ||============================== //
 type Props = {
-  border: boolean;
-    boxShadow: boolean,
-    contentSX: object,
-    darkTitle: boolean,
-    divider: boolean,
-    elevation: number,
-    secondary: ReactNode,
-    shadow: string,
-    sx: object,
-    title: string,
-    codeHighlight: boolean,
-    content: boolean,
+    border?: boolean;
+    boxShadow?: boolean,
+    contentSX?: object,
+    darkTitle?: boolean,
+    divider?: boolean,
+    elevation?: number,
+    secondary?: ReactNode,
+    shadow?: string,
+    sx?: object,
+    title?: string,
+    codeHighlight?: boolean,
+    content?: boolean,
     children: ReactNode
 }
 const MainCard = forwardRef(
@@ -48,7 +44,7 @@ const MainCard = forwardRef(
             codeHighlight,
             ...others
         }: Props,
-        ref:any
+        ref: any
     ) => {
         const theme = useTheme();
         boxShadow = theme.palette.mode === 'dark' ? boxShadow || true : boxShadow;
@@ -89,16 +85,6 @@ const MainCard = forwardRef(
                 {/* card content */}
                 {content && <CardContent sx={contentSX}>{children}</CardContent>}
                 {!content && children}
-
-                {/* card footer - clipboard & highlighter  */}
-                {codeHighlight && (
-                    <>
-                        <Divider sx={{ borderStyle: 'dashed' }} />
-                        <Highlighter codeHighlight={codeHighlight} main>
-                            {children}
-                        </Highlighter>
-                    </>
-                )}
             </Card>
         );
     }

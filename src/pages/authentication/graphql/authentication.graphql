@@ -1,0 +1,12 @@
+query GetProfile($_eq: String!) {
+  user(where: {id: {_eq: $_eq}}, limit: 1) {
+    id
+    email
+    last_seen
+  }
+}
+query GetUsers {
+  user {
+    id email last_seen
+  }
+}
